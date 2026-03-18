@@ -303,6 +303,327 @@ body.theme-heuk   { background: #0a0a0a; }
 }
 .back-btn:hover { background: rgba(0,0,0,0.4); color: #fff; }
 
+/* ── ADMIN ENTRY BUTTON ── */
+.admin-entry-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 20px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.2);
+  font-family: 'Hahmlet', serif;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.2s;
+  width: 100%;
+}
+.admin-entry-btn:hover { color: rgba(255,255,255,0.5); }
+
+/* ── ADMIN MODAL OVERLAY ── */
+.admin-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  overflow-y: auto;
+  padding: 20px;
+}
+.admin-overlay.open { display: flex; flex-direction: column; align-items: center; }
+
+.admin-modal {
+  background: #0e0e1c;
+  border: 2px solid rgba(255,255,255,0.15);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 680px;
+  padding: 28px 24px 36px;
+  position: relative;
+  animation: slideUp 0.35s cubic-bezier(0.34,1.2,0.64,1) both;
+}
+@keyframes slideUp {
+  from { opacity:0; transform:translateY(40px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── ADMIN LOGIN ── */
+.adm-lock {
+  text-align: center;
+  padding: 20px 0;
+}
+.adm-lock-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.adm-lock-title {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 1.3rem;
+  color: #f5e642;
+  margin-bottom: 4px;
+}
+.adm-lock-sub { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 28px; }
+.adm-token-input {
+  width: 100%;
+  max-width: 260px;
+  background: rgba(255,255,255,0.06);
+  border: 2px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 14px;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-align: center;
+  outline: none;
+  margin-bottom: 8px;
+  transition: border-color 0.2s;
+  font-family: 'Hahmlet', serif;
+}
+.adm-token-input:focus { border-color: #f5e642; }
+.adm-token-err { color: #ff5252; font-size: 0.78rem; height: 18px; margin-bottom: 14px; }
+.adm-login-btn {
+  background: #f5e642;
+  color: #000;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 36px;
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(245,230,66,0.3);
+}
+.adm-login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(245,230,66,0.5); }
+
+/* ── ADMIN PANEL ── */
+.adm-panel { display: none; }
+.adm-panel.open { display: block; }
+
+.adm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.adm-title {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 1.2rem;
+  color: #f5e642;
+}
+.adm-close-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.6);
+  border-radius: 20px;
+  padding: 6px 16px;
+  cursor: pointer;
+  font-family: 'Hahmlet', serif;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+.adm-close-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+/* cloudinary config */
+.adm-section-label {
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  color: rgba(0,245,212,0.7);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.adm-config-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+.adm-cfg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.adm-cfg-field label { display: block; font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-bottom: 5px; }
+.adm-cfg-input {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 9px 11px;
+  color: #fff;
+  font-family: 'Hahmlet', serif;
+  font-size: 0.82rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.adm-cfg-input:focus { border-color: rgba(0,245,212,0.5); }
+.adm-cfg-hint { font-size: 0.68rem; color: rgba(255,255,255,0.3); line-height: 1.5; margin-bottom: 10px; }
+.adm-cfg-hint a { color: rgba(0,245,212,0.8); }
+.adm-cfg-save {
+  background: rgba(0,245,212,0.15);
+  border: 1px solid rgba(0,245,212,0.4);
+  color: #00f5d4;
+  border-radius: 8px;
+  padding: 7px 18px;
+  cursor: pointer;
+  font-family: 'Hahmlet', serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+.adm-cfg-save:hover { background: rgba(0,245,212,0.25); }
+
+/* style tabs */
+.adm-style-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.adm-tab {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.45);
+  transition: all 0.2s;
+}
+.adm-tab.active { background: rgba(245,230,66,0.12); border-color: #f5e642; color: #f5e642; }
+
+/* track rows */
+.adm-track-list { display: flex; flex-direction: column; gap: 10px; }
+.adm-track-row {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 14px;
+  transition: border-color 0.2s;
+}
+.adm-track-row.has-song { border-color: rgba(0,230,118,0.3); }
+.adm-track-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.adm-step-tag {
+  font-size: 0.65rem;
+  background: rgba(0,245,212,0.12);
+  color: rgba(0,245,212,0.9);
+  border-radius: 20px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+.adm-song-name {
+  flex: 1;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.adm-song-name.empty { color: rgba(255,255,255,0.3); font-weight: 400; font-style: italic; }
+.adm-status-ok  { font-size: 0.7rem; background: rgba(0,230,118,0.15); color: #00e676; border-radius: 20px; padding: 2px 8px; }
+.adm-status-none{ font-size: 0.7rem; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); border-radius: 20px; padding: 2px 8px; }
+
+.adm-upload-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.adm-upload-label {
+  position: relative;
+  background: rgba(245,230,66,0.1);
+  border: 1px dashed rgba(245,230,66,0.4);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #f5e642;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.adm-upload-label:hover { background: rgba(245,230,66,0.18); border-style: solid; }
+.adm-upload-label input { position: absolute; inset: 0; opacity: 0; cursor: pointer; font-size: 0; }
+.adm-url-input {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #fff;
+  font-family: 'Hahmlet', serif;
+  font-size: 0.75rem;
+  outline: none;
+  min-width: 120px;
+  transition: border-color 0.2s;
+}
+.adm-url-input:focus { border-color: rgba(0,245,212,0.4); }
+.adm-url-input::placeholder { color: rgba(255,255,255,0.25); }
+.adm-save-url-btn {
+  background: rgba(0,245,212,0.12);
+  border: 1px solid rgba(0,245,212,0.4);
+  border-radius: 8px;
+  padding: 7px 12px;
+  cursor: pointer;
+  color: #00f5d4;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: 'Hahmlet', serif;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.adm-save-url-btn:hover { background: rgba(0,245,212,0.22); }
+.adm-del-btn {
+  background: rgba(255,82,82,0.1);
+  border: 1px solid rgba(255,82,82,0.3);
+  border-radius: 8px;
+  padding: 7px 10px;
+  cursor: pointer;
+  color: #ff5252;
+  font-size: 0.82rem;
+  transition: all 0.2s;
+}
+.adm-del-btn:hover { background: rgba(255,82,82,0.2); }
+.adm-prog-wrap {
+  width: 100%;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 8px;
+  display: none;
+}
+.adm-prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f5e642, #ff2d78);
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.3s;
+}
+
+/* toast */
+#adm-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: #1a1a2e;
+  border: 2px solid #f5e642;
+  border-radius: 40px;
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #f5e642;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  z-index: 2000;
+  white-space: nowrap;
+  pointer-events: none;
+}
+#adm-toast.show { transform: translateX(-50%) translateY(0); }
+
 /* ── OTHER STYLES (small peek buttons) ── */
 .other-styles-section {
   margin-top: 16px;
@@ -794,8 +1115,65 @@ input[type=range]::-webkit-slider-thumb {
       <div class="other-styles-label">다른 유형 살짝 따라해보기</div>
       <div class="other-styles-row" id="other-styles-row"></div>
     </div>
+
+    <!-- admin entry -->
+    <button class="admin-entry-btn" onclick="openAdmin()">⚙ 관리자</button>
   </div>
 </div>
+
+<!-- ══════════════════════════════════════
+     ADMIN OVERLAY (embedded)
+══════════════════════════════════════ -->
+<div class="admin-overlay" id="admin-overlay">
+  <div class="admin-modal">
+
+    <!-- LOGIN -->
+    <div class="adm-lock" id="adm-lock">
+      <div class="adm-lock-icon">🔐</div>
+      <div class="adm-lock-title">관리자 입장</div>
+      <div class="adm-lock-sub">BIGCAT Jukebox Admin</div>
+      <input class="adm-token-input" type="password" id="adm-token" placeholder="토큰 입력" maxlength="20"
+        onkeydown="if(event.key==='Enter')doAdminLogin()">
+      <div class="adm-token-err" id="adm-err"></div>
+      <button class="adm-login-btn" onclick="doAdminLogin()">입장</button>
+    </div>
+
+    <!-- PANEL -->
+    <div class="adm-panel" id="adm-panel">
+      <div class="adm-header">
+        <div class="adm-title">🎵 Jukebox Admin</div>
+        <button class="adm-close-btn" onclick="closeAdmin()">닫기 ✕</button>
+      </div>
+
+      <!-- Cloudinary config -->
+      <div class="adm-section-label">☁️ Cloudinary 설정</div>
+      <div class="adm-config-box">
+        <div class="adm-cfg-row">
+          <div class="adm-cfg-field">
+            <label>Cloud Name</label>
+            <input class="adm-cfg-input" type="text" id="adm-cloud" placeholder="your_cloud_name">
+          </div>
+          <div class="adm-cfg-field">
+            <label>Upload Preset (Unsigned)</label>
+            <input class="adm-cfg-input" type="text" id="adm-preset" placeholder="unsigned_preset">
+          </div>
+        </div>
+        <div class="adm-cfg-hint">
+          💡 <a href="https://cloudinary.com/console/settings/upload" target="_blank">Cloudinary 콘솔</a>에서 Upload Preset을 <b style="color:#fff">Unsigned</b>로 생성 후 입력하세요.
+        </div>
+        <button class="adm-cfg-save" onclick="saveAdmConfig()">💾 저장</button>
+        <span id="adm-cfg-ok" style="font-size:0.72rem;color:#00e676;margin-left:10px;display:none">✓ 저장됨</span>
+      </div>
+
+      <!-- Style tabs -->
+      <div class="adm-section-label" style="margin-bottom:10px">🎵 스타일별 음원 관리</div>
+      <div class="adm-style-tabs" id="adm-tabs"></div>
+      <div class="adm-track-list" id="adm-tracks"></div>
+    </div>
+  </div>
+</div>
+
+<div id="adm-toast"></div>
 
 <script>
 /* ─── DATA ─── */
@@ -987,6 +1365,207 @@ function fmt(s) {
   if(!s||isNaN(s))return'0:00';
   return`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
 }
+
+/* ════════════════════════════════════
+   ADMIN LOGIC
+════════════════════════════════════ */
+const ADMIN_TOKEN = 'bigcat2026';
+let admLoggedIn = false;
+let admCurStyle = 1;
+
+function openAdmin() {
+  document.getElementById('admin-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  if (admLoggedIn) showAdmPanel();
+  else showAdmLock();
+}
+
+function closeAdmin() {
+  document.getElementById('admin-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  // refresh playlist in case tracks were updated
+  if (selStyle) { loadPlaylist(); renderPlaylist(); }
+}
+
+function showAdmLock() {
+  document.getElementById('adm-lock').style.display = 'block';
+  document.getElementById('adm-panel').classList.remove('open');
+  setTimeout(() => document.getElementById('adm-token').focus(), 200);
+}
+
+function showAdmPanel() {
+  document.getElementById('adm-lock').style.display = 'none';
+  document.getElementById('adm-panel').classList.add('open');
+  loadAdmConfig();
+  renderAdmTabs();
+  renderAdmTracks(admCurStyle);
+}
+
+function doAdminLogin() {
+  const val = document.getElementById('adm-token').value.trim();
+  if (val === ADMIN_TOKEN) {
+    admLoggedIn = true;
+    document.getElementById('adm-err').textContent = '';
+    document.getElementById('adm-token').value = '';
+    showAdmPanel();
+  } else {
+    document.getElementById('adm-err').textContent = '❌ 토큰이 올바르지 않습니다';
+    document.getElementById('adm-token').value = '';
+  }
+}
+
+function loadAdmConfig() {
+  document.getElementById('adm-cloud').value  = localStorage.getItem('bj_cloud')  || '';
+  document.getElementById('adm-preset').value = localStorage.getItem('bj_preset') || '';
+}
+
+function saveAdmConfig() {
+  localStorage.setItem('bj_cloud',  document.getElementById('adm-cloud').value.trim());
+  localStorage.setItem('bj_preset', document.getElementById('adm-preset').value.trim());
+  const ok = document.getElementById('adm-cfg-ok');
+  ok.style.display = 'inline';
+  setTimeout(() => ok.style.display = 'none', 2000);
+  admToast('✅ Cloudinary 설정 저장됨');
+}
+
+function renderAdmTabs() {
+  const c = document.getElementById('adm-tabs');
+  c.innerHTML = '';
+  STYLES.forEach(s => {
+    const t = TEACHERS[s.id];
+    const btn = document.createElement('button');
+    btn.className = 'adm-tab' + (s.id === admCurStyle ? ' active' : '');
+    btn.innerHTML = `${t.hanja} Style ${s.id}`;
+    btn.onclick = () => { admCurStyle = s.id; renderAdmTabs(); renderAdmTracks(s.id); };
+    c.appendChild(btn);
+  });
+}
+
+function admSkKey(styleId, step) {
+  return `bigcat_jukebox_s${styleId}_${step.replace(/\s+/g,'_').toLowerCase()}`;
+}
+function getAdmTrack(styleId, step) {
+  try { const r = localStorage.getItem(admSkKey(styleId,step)); return r ? JSON.parse(r) : null; } catch { return null; }
+}
+function setAdmTrack(styleId, step, data) {
+  localStorage.setItem(admSkKey(styleId,step), JSON.stringify(data));
+}
+function delAdmTrack(styleId, step) {
+  localStorage.removeItem(admSkKey(styleId,step));
+}
+
+function renderAdmTracks(styleId) {
+  const style = STYLES.find(s=>s.id===styleId);
+  const c = document.getElementById('adm-tracks');
+  c.innerHTML = '';
+  style.steps.forEach((step, i) => {
+    const data = getAdmTrack(styleId, step);
+    const rid = `ar-${styleId}-${i}`;
+    const row = document.createElement('div');
+    row.className = 'adm-track-row' + (data ? ' has-song' : '');
+    row.id = rid;
+    row.innerHTML = `
+      <div class="adm-track-top">
+        <span class="adm-step-tag">${step}</span>
+        <span class="adm-song-name ${data?'':'empty'}" id="aname-${rid}">${data ? data.name : '등록된 곡 없음'}</span>
+        <span class="${data?'adm-status-ok':'adm-status-none'}" id="astatus-${rid}">${data?'✓ 등록됨':'없음'}</span>
+      </div>
+      <div class="adm-upload-row">
+        <label class="adm-upload-label" id="auplabel-${rid}">
+          📤 MP3
+          <input type="file" accept="audio/*" onchange="handleAdmUpload(event,'${step}',${styleId},'${rid}')">
+        </label>
+        <input class="adm-url-input" type="url" placeholder="URL 직접 입력..."
+          id="aurl-${rid}" value="${data ? data.url : ''}">
+        <button class="adm-save-url-btn" onclick="admSaveUrl('${step}',${styleId},'${rid}')">저장</button>
+        ${data ? `<button class="adm-del-btn" onclick="admDelete('${step}',${styleId},'${rid}')">🗑</button>` : ''}
+      </div>
+      <div class="adm-prog-wrap" id="aprog-${rid}">
+        <div class="adm-prog-fill" id="aprogfill-${rid}"></div>
+      </div>
+    `;
+    c.appendChild(row);
+  });
+}
+
+async function handleAdmUpload(e, step, styleId, rid) {
+  const file = e.target.files[0]; if (!file) return;
+  const cloud  = localStorage.getItem('bj_cloud')  || '';
+  const preset = localStorage.getItem('bj_preset') || '';
+  if (!cloud || !preset) { admToast('⚠️ Cloudinary 설정 먼저!'); return; }
+
+  const label = document.getElementById(`auplabel-${rid}`);
+  const progW = document.getElementById(`aprog-${rid}`);
+  const progF = document.getElementById(`aprogfill-${rid}`);
+  label.style.opacity = '0.5'; label.style.pointerEvents = 'none';
+  progW.style.display = 'block'; progF.style.width = '0%';
+
+  try {
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', preset);
+    await new Promise((res, rej) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', `https://api.cloudinary.com/v1_1/${cloud}/video/upload`);
+      xhr.upload.onprogress = ev => { if(ev.lengthComputable) progF.style.width = Math.round(ev.loaded/ev.total*100)+'%'; };
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          const r = JSON.parse(xhr.responseText);
+          const td = { url: r.secure_url, name: file.name.replace(/\.[^.]+$/,''), duration: r.duration ? fmt(r.duration) : null };
+          setAdmTrack(styleId, step, td);
+          document.getElementById(`aurl-${rid}`).value = r.secure_url;
+          admUpdateRow(rid, styleId, step, td);
+          admToast(`✅ "${td.name}" 업로드 완료!`);
+          res();
+        } else rej();
+      };
+      xhr.onerror = () => rej();
+      xhr.send(fd);
+    });
+  } catch { admToast('❌ 업로드 실패'); }
+  finally {
+    label.style.opacity = '1'; label.style.pointerEvents = '';
+    setTimeout(() => progW.style.display = 'none', 800);
+  }
+}
+
+function admSaveUrl(step, styleId, rid) {
+  const url = document.getElementById(`aurl-${rid}`).value.trim();
+  if (!url) { admToast('⚠️ URL을 입력하세요'); return; }
+  const td = { url, name: step, duration: null };
+  setAdmTrack(styleId, step, td);
+  admUpdateRow(rid, styleId, step, td);
+  admToast(`✅ "${step}" URL 저장!`);
+}
+
+function admDelete(step, styleId, rid) {
+  if (!confirm(`"${step}" 곡을 삭제할까요?`)) return;
+  delAdmTrack(styleId, step);
+  renderAdmTracks(styleId);
+  admToast(`🗑 "${step}" 삭제됨`);
+}
+
+function admUpdateRow(rid, styleId, step, data) {
+  const row = document.getElementById(rid); if (!row) return;
+  row.classList.add('has-song');
+  const nm = document.getElementById(`aname-${rid}`);
+  nm.textContent = data.name; nm.classList.remove('empty');
+  const st = document.getElementById(`astatus-${rid}`);
+  st.textContent = '✓ 등록됨'; st.className = 'adm-status-ok';
+}
+
+let admToastTimer;
+function admToast(msg) {
+  const el = document.getElementById('adm-toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(admToastTimer);
+  admToastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// close overlay on bg click
+document.getElementById('admin-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeAdmin();
+});
 </script>
 </body>
 </html>
