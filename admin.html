@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIGCAT Jukebox ⚙️ Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --cream2: #EDE8DC;
+    --red: #E63329;
+    --yellow: #F5C842;
+    --green: #4CAF50;
+    --blue: #4A90D9;
+    --dark: #2C2416;
+    --sj: #E63329;
+    --ep: #4CAF50;
+    --if: #F5C842;
+    --fn: #4A90D9;
+    --tj: #2C2416;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    font-family: 'Nunito', sans-serif;
+    color: var(--dark);
+    min-height: 100vh;
+    background-image: radial-gradient(circle at 10% 10%, rgba(230,51,41,0.06) 0%, transparent 40%);
+  }
+
+  header {
+    text-align: center;
+    padding: 40px 20px 24px;
+    border-bottom: 2.5px solid var(--cream2);
+    background: white;
+  }
+
+  h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 32px;
+    color: var(--dark);
+  }
+
+  h1 span { color: var(--red); }
+
+  .subtitle { font-size: 13px; color: #aaa; margin-top: 6px; font-weight: 700; }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    background: var(--cream);
+    border: 2px solid var(--dark);
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--dark);
+    box-shadow: 2px 2px 0 var(--dark);
+    transition: all 0.15s;
+  }
+
+  .back-btn:hover { background: var(--dark); color: white; }
+
+  /* ─── LAYOUT ─── */
+  .admin-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  @media (max-width: 700px) {
+    .admin-wrap { grid-template-columns: 1fr; }
+  }
+
+  /* ─── PANEL ─── */
+  .panel {
+    background: white;
+    border-radius: 24px;
+    border: 2.5px solid var(--dark);
+    box-shadow: 5px 5px 0 var(--dark);
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 20px 24px 16px;
+    border-bottom: 2px solid var(--cream2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 18px;
+    color: var(--dark);
+  }
+
+  .panel-body { padding: 20px 24px 24px; }
+
+  /* ─── FORM ─── */
+  .form-group { margin-bottom: 14px; }
+
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 2px solid var(--cream2);
+    background: var(--cream);
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark);
+    transition: border-color 0.15s;
+    outline: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--dark);
+    background: white;
+  }
+
+  textarea { resize: vertical; min-height: 80px; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* ─── TYPE SELECTOR ─── */
+  .type-selector {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+
+  .type-btn {
+    padding: 7px 14px;
+    border-radius: 50px;
+    border: 2px solid var(--cream2);
+    background: var(--cream);
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--dark);
+    box-shadow: 2px 2px 0 var(--cream2);
+  }
+
+  .type-btn.selected { color: white; border-color: var(--dark); box-shadow: 2px 2px 0 var(--dark); }
+  .type-btn[data-v="SJ"].selected { background: var(--sj); }
+  .type-btn[data-v="EP"].selected { background: var(--ep); }
+  .type-btn[data-v="IF"].selected { background: var(--if); color: var(--dark); }
+  .type-btn[data-v="FN"].selected { background: var(--fn); }
+  .type-btn[data-v="TJ"].selected { background: var(--tj); }
+
+  /* ─── STEP SELECTOR ─── */
+  .step-selector {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+
+  .step-btn {
+    padding: 6px 12px;
+    border-radius: 50px;
+    border: 2px solid var(--cream2);
+    background: var(--cream);
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: #888;
+  }
+
+  .step-btn.selected { background: var(--dark); color: white; border-color: var(--dark); }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    padding: 12px 20px;
+    border-radius: 14px;
+    border: 2.5px solid var(--dark);
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow: 3px 3px 0 var(--dark);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--dark); }
+  .btn:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--dark); }
+
+  .btn-primary { background: var(--dark); color: white; }
+  .btn-danger  { background: var(--red); color: white; border-color: var(--red); }
+  .btn-outline { background: white; color: var(--dark); }
+  .btn-success { background: var(--green); color: white; border-color: var(--green); }
+
+  .btn-row {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  /* ─── TRACK LIST ─── */
+  .track-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--cream2);
+  }
+
+  .track-item:last-child { border-bottom: none; }
+
+  .track-dot {
+    width: 32px; height: 32px;
+    border-radius: 9px;
+    border: 2px solid var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 11px;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .track-dot.SJ { background: var(--sj); }
+  .track-dot.EP { background: var(--ep); }
+  .track-dot.IF { background: var(--if); color: var(--dark); }
+  .track-dot.FN { background: var(--fn); }
+  .track-dot.TJ { background: var(--tj); }
+
+  .track-info { flex: 1; min-width: 0; }
+  .track-name { font-size: 14px; font-weight: 800; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .track-meta { font-size: 11px; color: #aaa; font-weight: 700; }
+
+  .track-actions { display: flex; gap: 6px; }
+
+  .icon-btn {
+    width: 32px; height: 32px;
+    border-radius: 9px;
+    border: 2px solid var(--cream2);
+    background: var(--cream);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    transition: all 0.15s;
+  }
+
+  .icon-btn:hover { border-color: var(--dark); background: var(--dark); color: white; }
+  .icon-btn.del:hover { border-color: var(--red); background: var(--red); }
+
+  /* ─── JSON 출력 영역 ─── */
+  .json-output {
+    background: var(--dark);
+    color: #7fff7f;
+    border-radius: 14px;
+    padding: 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 320px;
+    overflow-y: auto;
+    border: 2px solid var(--dark);
+  }
+
+  .copy-hint {
+    font-size: 12px;
+    color: #aaa;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  /* ─── TOAST ─── */
+  .toast {
+    position: fixed;
+    bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--dark);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 800;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .toast.show { opacity: 1; }
+
+  .empty-list {
+    text-align: center;
+    padding: 30px;
+    color: #ccc;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .full-col {
+    grid-column: 1 / -1;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="back-btn">← 메인으로</a>
+  <h1>BIGCAT <span>Admin</span> ⚙️</h1>
+  <p class="subtitle">노래 데이터 관리 · JSON 생성 · tracks.json 복사</p>
+</header>
+
+<div class="admin-wrap">
+
+  <!-- ── 노래 추가 폼 ── -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title" id="formTitle">➕ 노래 추가</div>
+    </div>
+    <div class="panel-body">
+
+      <div class="form-group">
+        <label>노래 제목 (Title)</label>
+        <input type="text" id="fTitle" placeholder="예: Stand Up Song">
+      </div>
+
+      <div class="form-group">
+        <label>교사 유형 (Type)</label>
+        <div class="type-selector" id="typeSelector">
+          <div class="type-btn" data-v="SJ">💄 SJ</div>
+          <div class="type-btn" data-v="EP">😄 EP</div>
+          <div class="type-btn" data-v="IF">🌿 IF</div>
+          <div class="type-btn" data-v="FN">🧡 FN</div>
+          <div class="type-btn" data-v="TJ">📚 TJ</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>수업 단계 (Step)</label>
+        <div class="step-selector" id="stepSelector">
+          <div class="step-btn" data-v="Warm up">🔥 Warm up</div>
+          <div class="step-btn" data-v="Word">📝 Word</div>
+          <div class="step-btn" data-v="Modeling">🎬 Modeling</div>
+          <div class="step-btn" data-v="Role play">🎭 Role play</div>
+          <div class="step-btn" data-v="Game">🎮 Game</div>
+          <div class="step-btn" data-v="Wrap up">🌙 Wrap up</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>BPM</label>
+          <input type="number" id="fBpm" placeholder="100" min="60" max="200">
+        </div>
+        <div class="form-group">
+          <label>Mood</label>
+          <input type="text" id="fMood" placeholder="energetic, fun">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>가사 (한 줄에 하나씩)</label>
+        <textarea id="fLyrics" placeholder="Stand up! Sit down!&#10;Clap your hands!&#10;Ready to learn!"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>TPR 동작 (쉼표로 구분)</label>
+        <input type="text" id="fTpr" placeholder="stand up, clap hands, turn around">
+      </div>
+
+      <div class="form-group">
+        <label>MP3 URL (Cloudinary)</label>
+        <input type="url" id="fAudioUrl" placeholder="https://res.cloudinary.com/...">
+      </div>
+
+      <div class="form-group">
+        <label>Audio Style</label>
+        <input type="text" id="fAudioStyle" placeholder="march, kids, upbeat">
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="saveTrack()">💾 저장</button>
+        <button class="btn btn-outline" onclick="resetForm()">↺ 초기화</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 현재 목록 ── -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">📋 노래 목록</div>
+      <span id="trackCount" style="font-size:13px;font-weight:800;color:#aaa">0곡</span>
+    </div>
+    <div class="panel-body" id="trackList">
+      <div class="empty-list">아직 노래가 없어요<br>왼쪽에서 추가해보세요!</div>
+    </div>
+  </div>
+
+  <!-- ── JSON 출력 (전체 너비) ── -->
+  <div class="panel full-col">
+    <div class="panel-header">
+      <div class="panel-title">📦 tracks.json 출력</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-success" onclick="copyJSON()">📋 복사</button>
+        <button class="btn btn-outline" onclick="downloadJSON()">⬇️ 다운로드</button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <p class="copy-hint">👆 복사 후 GitHub의 tracks.json 파일에 붙여넣으면 바로 반영돼요!</p>
+      <div class="json-output" id="jsonOutput">[ ]</div>
+    </div>
+  </div>
+
+  <!-- ── JSON 불러오기 ── -->
+  <div class="panel full-col">
+    <div class="panel-header">
+      <div class="panel-title">📥 기존 JSON 불러오기</div>
+    </div>
+    <div class="panel-body">
+      <p class="copy-hint">기존 tracks.json 내용을 붙여넣으면 불러올 수 있어요</p>
+      <textarea id="importArea" style="min-height:100px;font-family:monospace;font-size:12px" placeholder='[{"id":1,"type":"SJ",...}]'></textarea>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="importJSON()">📥 불러오기</button>
+        <button class="btn btn-danger" onclick="clearAll()">🗑️ 전체 삭제</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let tracks = JSON.parse(localStorage.getItem('bigcat_tracks') || '[]');
+let editId = null;
+let selectedType = '';
+let selectedStep = '';
+
+// ─── 유형/단계 셀렉터 ───
+document.getElementById('typeSelector').addEventListener('click', e => {
+  const btn = e.target.closest('.type-btn');
+  if (!btn) return;
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedType = btn.dataset.v;
+});
+
+document.getElementById('stepSelector').addEventListener('click', e => {
+  const btn = e.target.closest('.step-btn');
+  if (!btn) return;
+  document.querySelectorAll('.step-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedStep = btn.dataset.v;
+});
+
+// ─── 저장 ───
+function saveTrack() {
+  const title = document.getElementById('fTitle').value.trim();
+  const bpm = parseInt(document.getElementById('fBpm').value) || 100;
+  const mood = document.getElementById('fMood').value.trim();
+  const lyricsRaw = document.getElementById('fLyrics').value.trim();
+  const tprRaw = document.getElementById('fTpr').value.trim();
+  const audioUrl = document.getElementById('fAudioUrl').value.trim();
+  const audioStyle = document.getElementById('fAudioStyle').value.trim();
+
+  if (!title) return showToast('⚠️ 제목을 입력해주세요!');
+  if (!selectedType) return showToast('⚠️ 교사 유형을 선택해주세요!');
+  if (!selectedStep) return showToast('⚠️ 수업 단계를 선택해주세요!');
+
+  const lyrics = lyricsRaw ? lyricsRaw.split('\n').map(l => l.trim()).filter(Boolean) : [];
+  const tpr = tprRaw ? tprRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+
+  if (editId !== null) {
+    const idx = tracks.findIndex(t => t.id === editId);
+    if (idx !== -1) {
+      tracks[idx] = { ...tracks[idx], title, type: selectedType, step: selectedStep, bpm, mood, lyrics, tpr, audio_url: audioUrl, audio_style: audioStyle };
+      showToast('✅ 수정 완료!');
+      editId = null;
+      document.getElementById('formTitle').textContent = '➕ 노래 추가';
+    }
+  } else {
+    const newId = tracks.length > 0 ? Math.max(...tracks.map(t => t.id)) + 1 : 1;
+    tracks.push({ id: newId, title, type: selectedType, step: selectedStep, bpm, mood, lyrics, tpr, audio_url: audioUrl, audio_style: audioStyle });
+    showToast('✅ 추가 완료!');
+  }
+
+  save();
+  resetForm();
+  renderList();
+  renderJSON();
+}
+
+// ─── 수정 ───
+function editTrack(id) {
+  const t = tracks.find(x => x.id === id);
+  if (!t) return;
+  editId = id;
+  document.getElementById('formTitle').textContent = '✏️ 수정 중';
+  document.getElementById('fTitle').value = t.title;
+  document.getElementById('fBpm').value = t.bpm;
+  document.getElementById('fMood').value = t.mood || '';
+  document.getElementById('fLyrics').value = (t.lyrics || []).join('\n');
+  document.getElementById('fTpr').value = (t.tpr || []).join(', ');
+  document.getElementById('fAudioUrl').value = t.audio_url || '';
+  document.getElementById('fAudioStyle').value = t.audio_style || '';
+
+  // 유형 선택
+  selectedType = t.type;
+  document.querySelectorAll('.type-btn').forEach(b => {
+    b.classList.toggle('selected', b.dataset.v === t.type);
+  });
+
+  // 단계 선택
+  selectedStep = t.step;
+  document.querySelectorAll('.step-btn').forEach(b => {
+    b.classList.toggle('selected', b.dataset.v === t.step);
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── 삭제 ───
+function deleteTrack(id) {
+  if (!confirm('이 노래를 삭제할까요?')) return;
+  tracks = tracks.filter(t => t.id !== id);
+  save();
+  renderList();
+  renderJSON();
+  showToast('🗑️ 삭제됨');
+}
+
+// ─── 초기화 ───
+function resetForm() {
+  editId = null;
+  document.getElementById('formTitle').textContent = '➕ 노래 추가';
+  document.getElementById('fTitle').value = '';
+  document.getElementById('fBpm').value = '';
+  document.getElementById('fMood').value = '';
+  document.getElementById('fLyrics').value = '';
+  document.getElementById('fTpr').value = '';
+  document.getElementById('fAudioUrl').value = '';
+  document.getElementById('fAudioStyle').value = '';
+  selectedType = '';
+  selectedStep = '';
+  document.querySelectorAll('.type-btn, .step-btn').forEach(b => b.classList.remove('selected'));
+}
+
+// ─── 목록 렌더 ───
+function renderList() {
+  const el = document.getElementById('trackList');
+  document.getElementById('trackCount').textContent = `${tracks.length}곡`;
+
+  if (tracks.length === 0) {
+    el.innerHTML = '<div class="empty-list">아직 노래가 없어요<br>왼쪽에서 추가해보세요!</div>';
+    return;
+  }
+
+  el.innerHTML = tracks.map(t => `
+    <div class="track-item">
+      <div class="track-dot ${t.type}">${t.type}</div>
+      <div class="track-info">
+        <div class="track-name">${t.title}</div>
+        <div class="track-meta">${t.step} · ${t.bpm} BPM</div>
+      </div>
+      <div class="track-actions">
+        <button class="icon-btn" onclick="editTrack(${t.id})">✏️</button>
+        <button class="icon-btn del" onclick="deleteTrack(${t.id})">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── JSON 렌더 ───
+function renderJSON() {
+  document.getElementById('jsonOutput').textContent = JSON.stringify(tracks, null, 2);
+}
+
+// ─── 복사 ───
+async function copyJSON() {
+  const text = JSON.stringify(tracks, null, 2);
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast('📋 복사됨! GitHub에 붙여넣으세요');
+  } catch(e) {
+    showToast('⚠️ 복사 실패 — 직접 선택해서 복사하세요');
+  }
+}
+
+// ─── 다운로드 ───
+function downloadJSON() {
+  const blob = new Blob([JSON.stringify(tracks, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'tracks.json';
+  a.click();
+  showToast('⬇️ tracks.json 다운로드 시작!');
+}
+
+// ─── 불러오기 ───
+function importJSON() {
+  const raw = document.getElementById('importArea').value.trim();
+  if (!raw) return showToast('⚠️ JSON을 붙여넣어주세요!');
+  try {
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) throw new Error('배열이 아님');
+    tracks = parsed;
+    save();
+    renderList();
+    renderJSON();
+    document.getElementById('importArea').value = '';
+    showToast(`✅ ${tracks.length}곡 불러오기 완료!`);
+  } catch(e) {
+    showToast('❌ JSON 형식 오류 — 다시 확인해주세요');
+  }
+}
+
+// ─── 전체 삭제 ───
+function clearAll() {
+  if (!confirm('모든 노래를 삭제할까요? 되돌릴 수 없어요!')) return;
+  tracks = [];
+  save();
+  renderList();
+  renderJSON();
+  showToast('🗑️ 전체 삭제됨');
+}
+
+// ─── 저장/로드 ───
+function save() {
+  localStorage.setItem('bigcat_tracks', JSON.stringify(tracks));
+}
+
+// ─── 토스트 ───
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ─── 시작 ───
+renderList();
+renderJSON();
+</script>
+</body>
+</html>
