@@ -419,14 +419,15 @@ async function testGithub(){
 
 // ── GitHub 파일 업로드 API ──
 async function ghUploadFile(cfg, filePath, base64Content, message){
-  // 기존 파일 SHA 확인 (덮어쓰기용)
+  // 항상 최신 SHA 가져오기
   let sha=null;
-  try{
-    const r=await fetch(`https://api.github.com/repos/${cfg.repo}/contents/${filePath}?ref=${cfg.branch}`,{
-      headers:{'Authorization':`token ${cfg.token}`,'Accept':'application/vnd.github.v3+json'}
-    });
-    if(r.ok){const d=await r.json();sha=d.sha;}
-  }catch(e){}
+  const shaRes=await fetch(`https://api.github.com/repos/${cfg.repo}/contents/${filePath}?ref=${cfg.branch}`,{
+    headers:{'Authorization':`token ${cfg.token}`,'Accept':'application/vnd.github.v3+json'}
+  });
+  if(shaRes.ok){
+    const d=await shaRes.json();
+    sha=d.sha;
+  }
 
   const body={message, content:base64Content, branch:cfg.branch};
   if(sha) body.sha=sha;
@@ -436,6 +437,25 @@ async function ghUploadFile(cfg, filePath, base64Content, message){
     headers:{'Authorization':`token ${cfg.token}`,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
     body:JSON.stringify(body)
   });
+
+  // SHA 충돌(422)이면 SHA 다시 가져와서 재시도
+  if(r.status===422){
+    const shaRes2=await fetch(`https://api.github.com/repos/${cfg.repo}/contents/${filePath}?ref=${cfg.branch}&t=${Date.now()}`,{
+      headers:{'Authorization':`token ${cfg.token}`,'Accept':'application/vnd.github.v3+json'}
+    });
+    if(shaRes2.ok){
+      const d2=await shaRes2.json();
+      body.sha=d2.sha;
+      const r2=await fetch(`https://api.github.com/repos/${cfg.repo}/contents/${filePath}`,{
+        method:'PUT',
+        headers:{'Authorization':`token ${cfg.token}`,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
+        body:JSON.stringify(body)
+      });
+      if(!r2.ok){const err=await r2.json();throw new Error(err.message||`HTTP ${r2.status}`);}
+      return r2.json();
+    }
+  }
+
   if(!r.ok){const err=await r.json();throw new Error(err.message||`HTTP ${r.status}`);}
   return r.json();
 }
