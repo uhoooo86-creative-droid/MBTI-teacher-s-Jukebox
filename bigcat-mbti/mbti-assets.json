@@ -60,10 +60,13 @@
     "label": "리드형 교사",
     "memo": "",
     "audio": {
-      "name": "ENFJ-bgm.mp3",
-      "path": "./assets/audio/ENFJ-bgm.mp3"
+      "name": "ISFP-bgm.mp3",
+      "path": "./assets/audio/ISFP-bgm.mp3"
     },
-    "material": null
+    "material": {
+      "name": "ENFJ-card.pdf",
+      "path": "./assets/materials/ENFJ-card.pdf"
+    }
   },
   "ENTJ": {
     "group": "NT",
@@ -84,6 +87,17 @@
     "audio": {
       "name": "INTJ-bgm.mp3",
       "path": "./assets/audio/INTJ-bgm.mp3"
+    },
+    "material": null
+  },
+  "ISFP": {
+    "group": "SP",
+    "icon": "🎭",
+    "label": "표현형 교사",
+    "memo": "",
+    "audio": {
+      "name": "ISFP-bgm.mp3",
+      "path": "./assets/audio/ISFP-bgm.mp3"
     },
     "material": null
   }
