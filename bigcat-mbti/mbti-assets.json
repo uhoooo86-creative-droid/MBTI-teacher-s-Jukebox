@@ -64,5 +64,16 @@
       "name": "ENTJ-card.pdf",
       "path": "./assets/materials/ENTJ-card.pdf"
     }
+  },
+  "ISTJ": {
+    "group": "SJ",
+    "icon": "📋",
+    "label": "루틴형 교사",
+    "memo": "무전기교구, Whisper",
+    "audio": {
+      "name": "ISTJ-card.pdf",
+      "path": "./assets/audio/ISTJ-card.pdf"
+    },
+    "material": null
   }
 }
